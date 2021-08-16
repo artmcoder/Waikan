@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,20 +29,20 @@ public class UserService {
     @Value("${host.name}")
     private String hostName;
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final MailSender mailSender;
 
     public UserService(UserRepository userRepository,
-//                       PasswordEncoder passwordEncoder,
+                       PasswordEncoder passwordEncoder,
                        MailSender mailSender) {
         this.userRepository = userRepository;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
         this.mailSender = mailSender;
     }
 
     public boolean createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) return false;
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(Role.ROLE_USER);
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
@@ -80,7 +82,7 @@ public class UserService {
 
     public void editProfile(String name, String phoneNumber, MultipartFile avatar, String email) throws IOException {
         User userFromDb = userRepository.findByEmail(email);
-//        if (userFromDb == null) throw new UsernameNotFoundException("Email " + email + " is not found");
+        if (userFromDb == null) throw new UsernameNotFoundException("Email " + email + " is not found");
         userFromDb.setName(name);
         userFromDb.setPhoneNumber(phoneNumber);
         if (avatar.getSize() != 0) {
