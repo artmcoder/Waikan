@@ -28,12 +28,12 @@ public class RegistrationController {
             model.addAttribute("errorRegistration", "Пользователь уже существует");
             return "registration";
         } else {
-            return "redirect:/register-successfully&email=" + user.getEmail();
+            return "redirect:/register-successfully?email=" + user.getEmail();
         }
     }
 
     @GetMapping("/register-successfully")
-    public String registerSuccssesfully(Principal principal, @RequestParam String email,
+    public String registerSuccessfully(Principal principal, @RequestParam(required = false) String email,
                                         Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         model.addAttribute("email", email);
