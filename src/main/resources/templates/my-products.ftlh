@@ -11,13 +11,13 @@
         <form action="/product/create" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="productName">Название товара</label>
-                <input type="text" class="form-control"
+                <input type="text" required class="form-control"
                        id="productName" name="name">
             </div>
             <div class="form-group">
                 <label for="price">Цена товара</label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="price" name="price">
+                    <input type="number" required class="form-control" id="price" name="price">
                     <div class="input-group-append">
                         <span class="input-group-text">₽</span>
                     </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label for="searchCity">Город</label>
-                <select id="searchCity" name="city" class="form-control">
+                <select id="searchCity" required name="city" class="form-control">
                     <option value="">Город не выбран</option>
                     <#list towns as t>
                         <option value="${t}">${t}</option>
@@ -34,23 +34,23 @@
             </div>
             <div class="form-group">
                 <label for="description">Описание товара</label>
-                <textarea class="form-control" id="description" name="description"></textarea>
+                <textarea required class="form-control" id="description" name="description"></textarea>
             </div>
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" name="file1" id="file1">
+                    <input required type="file" name="file1" id="file1">
                     <label class="custom-file-label" for="file1">Первая фотография к товару</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" name="file2" id="file2">
+                    <input required type="file" name="file2" id="file2">
                     <label class="custom-file-label" for="file2">Вторая фотография к товару</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" name="file3" id="file3">
+                    <input required type="file" name="file3" id="file3">
                     <label class="custom-file-label" for="file3">Третья фотография к товару</label>
                 </div>
             </div>
